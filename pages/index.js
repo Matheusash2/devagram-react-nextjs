@@ -9,8 +9,6 @@ export default function Home() {
   const [imagem, setImagem] = useState(null);
   const referenciaInput = useRef(null);
 
-  console.log(imagem);
-
   return (
     <>
       <h1>Olá mundo!</h1>
