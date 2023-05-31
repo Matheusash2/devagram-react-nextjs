@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/lrgacy/image";
 import { useState } from "react";
 import Botao from "@/componentes/botao";
 import InputPublico from "@/componentes/inputPublico";
@@ -12,6 +12,7 @@ import imagemChave from "../../public/imagens/key.svg"
 import imagemLogo from "../../public/imagens/logo.svg"
 import imagemUsuarioAtivo from "../../public/imagens/usuarioAtivo.svg"
 import imagemAvatar from "../../public/imagens/avatar.svg"
+import { useRouter } from "next/router";
 
 const usuarioService = new UsuarioService();
 
@@ -22,6 +23,7 @@ export default function Cadastro() {
     const [senha, setSenha] = useState("");
     const [confirmacaoSenha, setConfirmaoSenha] = useState("");
     const [estaSubmetendo, setEstaSubmetendo] = useState(false);
+    const router = useRouter();
 
     const validarFormulario = () => {
         return (
@@ -51,7 +53,12 @@ export default function Cadastro() {
             }
 
             await usuarioService.cadastro(corpoReqCadastro);
-            alert("Sucerro!");
+            await usuarioService.login({
+                login: email,
+                senha
+            });
+
+            router.push('/');
             
         } catch (error) {
             alert (
