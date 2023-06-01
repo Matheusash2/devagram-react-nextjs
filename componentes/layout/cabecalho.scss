@@ -42,6 +42,36 @@
         }
     }
 
+    .resultadoPesquisaContainer {
+        position: absolute;
+        background-color: $branco;
+        width: 100%;
+        z-index: 9;
+
+        .resultadoPesquisa {
+            display: flex;
+            padding: 10px 16px;
+
+            &:hover {
+                background-color: $cinza;
+            }
+
+            .avatar {
+                width: 32px;
+                height: 32px;
+                margin-right: 8px;
+            }
+
+            .informacoesUsuario {
+                > * {
+                    display: block;
+                    font-size: 12px;
+                    color: $cinza4;
+                }
+            }
+        }
+    }
+
     @media screen and (min-width: $desktopBreakpoint) {
         background-color: $branco;
         border: none;
@@ -57,7 +87,7 @@
             }
 
             .barraPesquisa {
-                flex: 0.6;
+                flex: 0.5;
                 margin: 0px 5px 0px 30px;
 
                 input {
@@ -74,5 +104,15 @@
                 }
             }
         }
+
+        .resultadoPesquisaContainer {
+            width: 20%;
+            margin: auto;
+            cursor: pointer;
+            right: 0;
+            left: 8%;
+            box-shadow: 0px 4px 5px $cinza1;
+        }
+
     }
 }

@@ -78,6 +78,10 @@ input {
   }
 }
 
+strong {
+  font-family: $fontBold;
+}
+
 
 @import '../public/fonts/fonts.scss';
 @import '../componentes/botao/botao.scss';
