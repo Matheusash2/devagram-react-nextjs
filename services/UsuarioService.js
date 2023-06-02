@@ -23,4 +23,8 @@ export default class UsuarioService extends HttpService {
     estaAutenticado() {
         return localStorage.getItem('token') !== null;
     }
+
+    async pesquisar(termoDaPesquisa) {
+        return this.get('/pesquisa?filtro=' + termoDaPesquisa);
+    }
 }

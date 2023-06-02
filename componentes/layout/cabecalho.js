@@ -1,16 +1,21 @@
 import Image from "next/legacy/image";
+import { useState } from "react";
+import Navegacao from "./navegacao";
+import ResultadoPesquisa from "./resultadoPesquisa";
+import UsuarioService from "@/services/UsuarioService";
 
 import imagemLogoHorizontal from "../../public/imagens/logoHorizontal.svg";
 import imagemLupa from "../../public/imagens/lupa.svg";
-import Navegacao from "./navegacao";
-import { useState } from "react";
-import ResultadoPesquisa from "./resultadoPesquisa";
+import { useRouter } from "next/router";
+
+const usuarioService = new UsuarioService();
 
 export default function Cabecalho() {
     const [resultadoPesquisa, setResultadoPesquisa] = useState([]);
-    const [termoPesquisado, setTermoPesquisado] = useState([]);
+    const [termoPesquisado, setTermoPesquisado] = useState('');
+    const router = useRouter();
 
-    const aoPesquisar = (e) => {
+    const aoPesquisar = async (e) => {
         setTermoPesquisado(e.target.value);
         setResultadoPesquisa([]);
         
@@ -18,38 +23,30 @@ export default function Cabecalho() {
             return;
         }
 
-        setResultadoPesquisa([
-            {
-                avatar: '',
-                nome: 'matheus 1',
-                email: 'matheus1@teste.com',
-                _id: '123456'
-            },
-            {
-                avatar: '',
-                nome: 'matheus 2',
-                email: 'matheus2@teste.com',
-                _id: '456789'
-            },
-            {
-                avatar: '',
-                nome: 'matheus 3',
-                email: 'matheus3@teste.com',
-                _id: '987654'
-            }
-
-        ])
+        try {
+            const { data } = await usuarioService.pesquisar(termoPesquisado);
+            setResultadoPesquisa(data);
+        } catch (error) {
+            alert ('Erro ao pesquisar usuário. ' + error?.response?.data?.erro);   
+        }
     }
 
     const aoClicarResultadoPesquisa = (id) => {
-        console.log('aoClicarResultadoPesquisa', {id});
+        setResultadoPesquisa([]);
+        setTermoPesquisado('');
+        router.push(`/perfil/${id}`)
+    }
+
+    const redirecionarParaHome = () => {
+        router.push('/');
     }
 
     return (
         <header className="cabecalhoPrincipal">
             <div className="conteudoCabecalhoPrincipal">
                 <div className="logoCabecalhoPrincipal">
-                    <Image 
+                    <Image
+                        onClick={redirecionarParaHome} 
                         src={imagemLogoHorizontal}
                         alt="Logo devagram"
                         layout="fill"
