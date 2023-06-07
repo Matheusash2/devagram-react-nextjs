@@ -1,3 +1,4 @@
+import Id from "@/pages/perfil/[id]";
 import HttpService from "./HttpService";
 
 export default class UsuarioService extends HttpService {
@@ -26,5 +27,14 @@ export default class UsuarioService extends HttpService {
 
     async pesquisar(termoDaPesquisa) {
         return this.get('/pesquisa?filtro=' + termoDaPesquisa);
+    }
+
+    obterInformaçõesDoUsuarioLogado() {
+        return {
+            id: localStorage.getItem('id'),
+            nome: localStorage.getItem('nome'),
+            email: localStorage.getItem('email'),
+            avatar: localStorage.getItem('avatar')
+        };
     }
 }
