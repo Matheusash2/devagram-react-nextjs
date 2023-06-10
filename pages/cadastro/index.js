@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/lrgacy/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 import Botao from "@/componentes/botao";
 import InputPublico from "@/componentes/inputPublico";

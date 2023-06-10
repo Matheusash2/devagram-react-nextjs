@@ -1,8 +1,27 @@
+import CabecalhoComAcoes from "@/componentes/cabecalhoComAcoes";
+import Feed from "@/componentes/feed";
 import comAutorizacao from "@/hoc/comAutorizacao";
 
-function Perfil() {
+import imagemSetaEsquerda from "../../../public/imagens/setaEsquerda.svg";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
+function Perfil({usuarioLogado}) {
+    const [usuario, setUsuario] = useState({});
+    const router = useRouter();
+
+    useEffect(async () => {
+
+    }, []);
+
     return (
-        <h1>Perfil</h1>
+        <div className="paginaPerfil">
+            <CabecalhoComAcoes 
+                iconeEsquerda={imagemSetaEsquerda}
+                //titulo={}
+            />
+            <Feed usuarioLogado={usuarioLogado}/>
+        </div>
     );
 }
 

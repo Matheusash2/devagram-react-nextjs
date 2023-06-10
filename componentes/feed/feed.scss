@@ -96,5 +96,36 @@
     }
     @media screen and (min-width: $desktopBreakpoint) {
         padding-top: 8px;
+
+        .postagem {
+                
+            .avatar {
+                height: 42px;
+                width: 42px;
+            }
+
+            .rodapeDaPostagem {
+
+                .acoesDaPostagem{
+                    
+                    > span {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .containerFazerComentario {
+                margin-top: 12px;
+
+                .btnPublicacao {
+                    background-color: transparent;
+                    outline: none;
+                    border: none;
+                    color: $corPrimaria;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+            }
+        }    
     }
 }

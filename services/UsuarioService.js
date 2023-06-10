@@ -1,4 +1,3 @@
-import Id from "@/pages/perfil/[id]";
 import HttpService from "./HttpService";
 
 export default class UsuarioService extends HttpService {

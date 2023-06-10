@@ -2,32 +2,36 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../avatar";
 import Image from "next/legacy/image";
+import FazerComentario from "./fazerComentario";
 
 import imagemCurtir from "../../public/imagens/curtir.svg";
 import imagemCurtido from "../../public/imagens/curtido.svg";
 import imagemComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imagemComentarioCinza from "../../public/imagens/comentarioCinza.svg";
-import FazerComentario from "./fazerComentario";
+import FeedService from "@/services/FeedService";
 
 const tamanhoLimiteDescricao = 90;
+const feedService = new FeedService();
 
 export default function Postagem({
+    id,
     usuario,
     fotoDoPost,
     descricao,
     comentarios,
-    usuarioLogado
+    usuarioLogado,
+    curtidas
 }) {
-
+    const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
+    const [comentariosPostagem, setComentariosPostagem] = useState(comentarios);
     const [deveExibirSecaoParaComentar, setDeveExibirSecaoParaComentar] = useState(false);
+    const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(
+        tamanhoLimiteDescricao
+    );
 
     const exibirDescricaoCompleta = () => {
         setTamanhoAtualDaDescricao(Number.MAX_SAFE_INTEGER);
     }
-
-    const [tamanhoAtualDaDescricao, setTamanhoAtualDaDescricao] = useState(
-        tamanhoLimiteDescricao
-    );
 
     const descricaoMaiorQueLimite = () => {
         return descricao.length > tamanhoAtualDaDescricao;
@@ -40,32 +44,84 @@ export default function Postagem({
         }
         return mensagem;
     };
+
+    const obterImagemComentario = () => {
+        return deveExibirSecaoParaComentar
+            ? imagemComentarioAtivo
+            : imagemComentarioCinza;
+    }
+
+    const comentar = async(comentario) => {
+        console.log('Fazer comentario');
+        try {
+            await feedService.adicionarComentario(id, comentario);
+            setDeveExibirSecaoParaComentar(false);
+            setComentariosPostagem([
+                ...comentariosPostagem, {
+                    nome: usuarioLogado.nome,
+                    mensagem: comentario
+                }
+            ]);
+        } catch (error) {
+            alert(`Erro ao fazer comentario! ` + (e?.response?.data?.erro || ''));
+        }
+    }
+
+    const usuarioLogadoCurtiuPostagem = () => {
+        return curtidasPostagem.includes(usuarioLogado.id);
+    }
+
+    const alterarCurtida = async () => {
+        try {
+            await feedService.alterarCurtida(id);
+            if (usuarioLogadoCurtiuPostagem()) {
+                // Tira usuario logado
+                setCurtidasPostagem(
+                    curtidasPostagem.filter(idUsuarioQueCurtiu => idUsuarioQueCurtiu !== usuarioLogado.id)
+                );
+            } else {
+                // Adiciona usuario logado
+                setCurtidasPostagem ([
+                    ...curtidasPostagem,
+                    usuarioLogado.id
+                ]);
+            }
+        } catch (e) {
+            alert(`Erro ao alterar curtida! ` + (e?.response?.data?.erro || ''));
+        }
+    }
     
+    const obterImagemCurtida = () => {
+        return usuarioLogadoCurtiuPostagem()
+        ? imagemCurtido
+        : imagemCurtir;
+    }
+
     return (
         <div className="postagem">
             <Link href={`/perfil/${usuario.id}`}>
                 <section className="cabecalhoPostagem">
-                    <Avatar src={usuario.Avatar} />
+                    <Avatar src={usuario.avatar} />
                     <strong>{usuario.nome}</strong>
                 </section>
             </Link>
 
             <div className="fotoDaPostagem">
-                <img src={fotoDoPost} alt="Doto da postagem"/>
+                <img src={fotoDoPost} alt="Foto da postagem"/>
             </div>
 
             <div className="rodapeDaPostagem">
                 <div className="acoesDaPostagem">
                     <Image
-                        src={imagemCurtir}
+                        src={obterImagemCurtida()}
                         alt='icone curtir'
                         width={20}
                         height={20}
-                        onClick={() => console.log('curtir')} 
+                        onClick={alterarCurtida} 
                     />
 
                     <Image
-                        src={imagemComentarioCinza}
+                        src={obterImagemComentario()}
                         alt='icone comentar'
                         width={20}
                         height={20}
@@ -73,7 +129,7 @@ export default function Postagem({
                     />
 
                     <span className="quantidadeCurtidas">
-                        Curtido por <strong>32</strong>
+                        Curtido por <strong>{curtidasPostagem.length} pessoas</strong>
                     </span>                  
                 </div>
 
@@ -92,7 +148,7 @@ export default function Postagem({
                 </div>
                 
                 <div className="comentariosDaPublicacao">
-                    {comentarios.map((comentario, i)=> (
+                    {comentariosPostagem.map((comentario, i)=> (
                         <div className="comentario" key={i}>
                             <strong className="nomeUsuario">{comentario.nome}</strong>
                             <p className="descricao">{comentario.mensagem}</p>
@@ -102,7 +158,7 @@ export default function Postagem({
             </div>
 
             {deveExibirSecaoParaComentar && 
-                <FazerComentario usuarioLogado={usuarioLogado} />
+                <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado} />
             }
 
         </div>
