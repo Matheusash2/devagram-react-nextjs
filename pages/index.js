@@ -1,6 +1,6 @@
-import Home from "@/componentes/home";
-import Login from "@/componentes/login";
-import UsuarioService from "@/services/UsuarioService";
+import Home from "../componentes/home";
+import Login from "../componentes/login";
+import UsuarioService from "../services/UsuarioService";
 import { useEffect, useState } from "react";
 
 const usuarioService = new UsuarioService();

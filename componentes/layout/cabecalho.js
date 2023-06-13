@@ -2,7 +2,7 @@ import Image from "next/legacy/image";
 import { useState } from "react";
 import Navegacao from "./navegacao";
 import ResultadoPesquisa from "./resultadoPesquisa";
-import UsuarioService from "@/services/UsuarioService";
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemLogoHorizontal from "../../public/imagens/logoHorizontal.svg";
 import imagemLupa from "../../public/imagens/lupa.svg";

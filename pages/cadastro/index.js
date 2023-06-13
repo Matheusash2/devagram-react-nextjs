@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/legacy/image";
 import { useState } from "react";
-import Botao from "@/componentes/botao";
-import InputPublico from "@/componentes/inputPublico";
-import UploadImagem  from "@/componentes/uploadImagem";
-import { validarNome, validarEmail, validarSenha, validarConfirmacaoSenha } from "@/utils/validadores";
-import UsuarioService from "@/services/UsuarioService";
+import Botao from "../../componentes/botao/";
+import InputPublico from "../../componentes/inputPublico";
+import UploadImagem  from "../../componentes/uploadImagem";
+import { validarNome, validarEmail, validarSenha, validarConfirmacaoSenha } from "../../utils/validadores";
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemEnvelope from "../../public/imagens/envelope.svg"
 import imagemChave from "../../public/imagens/key.svg"

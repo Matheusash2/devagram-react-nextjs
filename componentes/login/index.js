@@ -5,7 +5,7 @@ import Image from "next/legacy/image";
 
 import { useState } from "react";
 import { validarEmail, validarSenha } from "../../utils/validadores"
-import UsuarioService from "@/services/UsuarioService";
+import UsuarioService from "../../services/UsuarioService";
 
 import imagemEnvelope from "../../public/imagens/envelope.svg"
 import imagemChave from "../../public/imagens/key.svg"

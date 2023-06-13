@@ -2,13 +2,13 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../avatar";
 import Image from "next/legacy/image";
-import FazerComentario from "./fazerComentario";
+import { FazerComentario } from "./fazerComentario";
 
 import imagemCurtir from "../../public/imagens/curtir.svg";
 import imagemCurtido from "../../public/imagens/curtido.svg";
 import imagemComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imagemComentarioCinza from "../../public/imagens/comentarioCinza.svg";
-import FeedService from "@/services/FeedService";
+import FeedService from "../../services/FeedService";
 
 const tamanhoLimiteDescricao = 90;
 const feedService = new FeedService();
@@ -51,8 +51,7 @@ export default function Postagem({
             : imagemComentarioCinza;
     }
 
-    const comentar = async(comentario) => {
-        console.log('Fazer comentario');
+    const comentar = async (comentario) => {
         try {
             await feedService.adicionarComentario(id, comentario);
             setDeveExibirSecaoParaComentar(false);
@@ -62,7 +61,7 @@ export default function Postagem({
                     mensagem: comentario
                 }
             ]);
-        } catch (error) {
+        } catch (e) {
             alert(`Erro ao fazer comentario! ` + (e?.response?.data?.erro || ''));
         }
     }
@@ -99,7 +98,7 @@ export default function Postagem({
 
     return (
         <div className="postagem">
-            <Link href={`/perfil/${usuario.id}`}>
+            <Link href={`/perfil/${id}`}>
                 <section className="cabecalhoPostagem">
                     <Avatar src={usuario.avatar} />
                     <strong>{usuario.nome}</strong>

@@ -1,4 +1,4 @@
-import comAutorizacao from "@/hoc/comAutorizacao";
+import comAutorizacao from "../../hoc/comAutorizacao";
 import Feed from "../feed";
 
 function Home({ usuarioLogado }) {
