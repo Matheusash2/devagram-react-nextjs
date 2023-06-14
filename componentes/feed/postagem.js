@@ -56,7 +56,8 @@ export default function Postagem({
             await feedService.adicionarComentario(id, comentario);
             setDeveExibirSecaoParaComentar(false);
             setComentariosPostagem([
-                ...comentariosPostagem, {
+                ...comentariosPostagem, 
+                {
                     nome: usuarioLogado.nome,
                     mensagem: comentario
                 }
@@ -98,7 +99,7 @@ export default function Postagem({
 
     return (
         <div className="postagem">
-            <Link href={`/perfil/${id}`}>
+            <Link href={`/perfil/${usuario.id}`}>
                 <section className="cabecalhoPostagem">
                     <Avatar src={usuario.avatar} />
                     <strong>{usuario.nome}</strong>

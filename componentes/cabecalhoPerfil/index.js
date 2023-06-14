@@ -4,7 +4,8 @@ import Avatar from "../avatar";
 import Botao from "../botao";
 
 export default function CabecalhoPerfil({
-    usuario
+    usuario,
+    id
 }) {
     return (
         <div className="cabecalhoPerfil largura30pctDesktop">
@@ -12,6 +13,8 @@ export default function CabecalhoPerfil({
                 iconeEsquerda={imagemSetaEsquerda}
                 titulo={usuario.nome}
             />
+
+            <hr className="bordaCabecalhoPerfil"/>
 
             <div className="statusPerfil">
                 <Avatar src={usuario.avatar}/>
@@ -22,11 +25,11 @@ export default function CabecalhoPerfil({
                             <span>Publicações</span>
                         </div>
                         <div className="status">
-                            <strong>120</strong>
+                            <strong>{usuario.seguidores}</strong>
                             <span>Seguidores</span>
                         </div>
                         <div className="status">
-                            <strong>135</strong>
+                            <strong>{usuario.seguindo}</strong>
                             <span>Seguindo</span>
                         </div>
                     </div>
