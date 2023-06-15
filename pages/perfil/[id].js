@@ -25,7 +25,7 @@ function Perfil({usuarioLogado}) {
     }
 
     const estaNoPerfilPessoal = () => {
-        return router.query.id === 'eu';
+        return router.query.id === 'eu' || router.query.id === usuarioLogado?.id;
     };
 
     useEffect(() => {
@@ -49,7 +49,7 @@ function Perfil({usuarioLogado}) {
             />
             <Feed 
             usuarioLogado={usuarioLogado}
-            idUsuario={usuario?._id}
+            usuarioPerfil={usuario}
             />
         </div>
     );
