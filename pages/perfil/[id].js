@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CabecalhoPerfil from "@/componentes/cabecalhoPerfil";
-import Feed from "../../../componentes/feed";
-import comAutorizacao from "../../../hoc/comAutorizacao";
-import UsuarioService from "../../../services/UsuarioService";
+import Feed from "../../componentes/feed";
+import comAutorizacao from "../../hoc/comAutorizacao";
+import UsuarioService from "../../services/UsuarioService";
 
 const usuarioService = new UsuarioService();
 
@@ -13,12 +13,20 @@ function Perfil({usuarioLogado}) {
 
     const obterPerfil = async (idUsuario) => {
         try {
-            const { data } = await usuarioService.obterPerfil(idUsuario);
+            const { data } = await usuarioService.obterPerfil(
+                estaNoPerfilPessoal()
+                    ? usuarioLogado.id
+                    : idUsuario
+                );
             return data;
         } catch (error) {
             alert(`Erro ao obter perfil do usuario!`);
         }
     }
+
+    const estaNoPerfilPessoal = () => {
+        return router.query.id === 'eu';
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -37,6 +45,7 @@ function Perfil({usuarioLogado}) {
             <CabecalhoPerfil 
                 usuarioLogado={usuarioLogado}
                 usuario={usuario}
+                estaNoPerfilPessoal={estaNoPerfilPessoal()}
             />
             <Feed 
             usuarioLogado={usuarioLogado}

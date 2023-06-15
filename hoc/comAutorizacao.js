@@ -1,7 +1,7 @@
+import { useRouter } from "next/router";
 import Cabecalho from "../componentes/layout/cabecalho";
 import Rodape from "../componentes/layout/rodape";
 import UsuarioService from "../services/UsuarioService"
-import { useRouter } from "next/router";
 
 const usuarioService = new UsuarioService();
 

@@ -2,13 +2,13 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../avatar";
 import Image from "next/legacy/image";
-import { FazerComentario } from "./fazerComentario";
+import FazerComentario from "./fazerComentario";
+import FeedService from "../../services/FeedService";
 
 import imagemCurtir from "../../public/imagens/curtir.svg";
 import imagemCurtido from "../../public/imagens/curtido.svg";
 import imagemComentarioAtivo from "../../public/imagens/comentarioAtivo.svg";
 import imagemComentarioCinza from "../../public/imagens/comentarioCinza.svg";
-import FeedService from "../../services/FeedService";
 
 const tamanhoLimiteDescricao = 90;
 const feedService = new FeedService();

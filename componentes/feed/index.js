@@ -33,20 +33,21 @@ export default function Feed({ usuarioLogado, usuarioPerfil }) {
     
       fetchData();
     }, [usuarioLogado, usuarioPerfil]);
+    
     if (!listaDePostagens.length) {
         return null;
     }
 
     return (
         <div className="feedContainer largura30pctDesktop">
-            {listaDePostagens.map(dadosPostagem => (
-                    <Postagem
-                        key={dadosPostagem.id}
-                        {...dadosPostagem}
-                        usuarioLogado={usuarioLogado}
-                    />
-                ))
-            }
+          {listaDePostagens.map(dadosPostagem => (
+            <Postagem
+              key={dadosPostagem.id}
+              {...dadosPostagem}
+              usuarioLogado={usuarioLogado}
+            />
+            ))
+          }
         </div>
     )
 }
