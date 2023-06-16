@@ -5,18 +5,19 @@ export default function CabecalhoComAcoes({
     iconeEsquerda,
     textoEsquerda = null,
     aoClicarAcaoEsquerda,
-    titulo, 
-    elementoDireita
+    titulo,
+    elementoDireita,
+    aoClicarElementoDireita
 }) {
     return (
         <div className={`cabecalhoComAcoes ${className}`}>
-            { iconeEsquerda ? (
+            {iconeEsquerda ? (
                 <Image
                     src={iconeEsquerda}
                     alt="Icone esquerdo cabecalho com ações"
                     onClick={aoClicarAcaoEsquerda}
                     width={25}
-                    height={25} 
+                    height={25}
                 />
             ) : (
                 textoEsquerda !== null && (
@@ -28,12 +29,14 @@ export default function CabecalhoComAcoes({
 
             <h3>{titulo}</h3>
 
-            {elementoDireita &&(
-            <button 
-                type="button"
-            >
-                {elementoDireita}
-            </button>
+            {elementoDireita && (
+                <button
+                    type="button"
+                    className="btnAcaoDireita"
+                    onClick={aoClicarElementoDireita}
+                >
+                    {elementoDireita}
+                </button>
             )}
 
         </div>

@@ -7,7 +7,7 @@ import UsuarioService from "../../services/UsuarioService";
 
 const usuarioService = new UsuarioService();
 
-function Perfil({usuarioLogado}) {
+function Perfil({ usuarioLogado }) {
     const [usuario, setUsuario] = useState({});
     const router = useRouter();
 
@@ -17,7 +17,7 @@ function Perfil({usuarioLogado}) {
                 estaNoPerfilPessoal()
                     ? usuarioLogado.id
                     : idUsuario
-                );
+            );
             return data;
         } catch (error) {
             alert(`Erro ao obter perfil do usuario!`);
@@ -30,11 +30,11 @@ function Perfil({usuarioLogado}) {
 
     useEffect(() => {
         const fetchData = async () => {
-        if (!router.query.id) {
-            return;
-        }
-        const dadosPerfil = await obterPerfil(router.query.id);
-        setUsuario(dadosPerfil);
+            if (!router.query.id) {
+                return;
+            }
+            const dadosPerfil = await obterPerfil(router.query.id);
+            setUsuario(dadosPerfil);
         };
 
         fetchData();
@@ -42,14 +42,14 @@ function Perfil({usuarioLogado}) {
 
     return (
         <div className="paginaPerfil">
-            <CabecalhoPerfil 
+            <CabecalhoPerfil
                 usuarioLogado={usuarioLogado}
                 usuario={usuario}
                 estaNoPerfilPessoal={estaNoPerfilPessoal()}
             />
-            <Feed 
-            usuarioLogado={usuarioLogado}
-            usuarioPerfil={usuario}
+            <Feed
+                usuarioLogado={usuarioLogado}
+                usuarioPerfil={usuario}
             />
         </div>
     );

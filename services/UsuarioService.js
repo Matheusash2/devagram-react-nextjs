@@ -16,8 +16,20 @@ export default class UsuarioService extends HttpService {
         }
     }
 
+    async logout() {
+        localStorage.removeItem("nome");
+        localStorage.removeItem("email");
+        localStorage.removeItem("token");
+        localStorage.removeItem("id");
+        localStorage.removeItem("avatar");
+    }
+
     async cadastro(dados) {
         return this.post('/cadastro', dados);
+    }
+
+    async atualizarPerfil(dados) {
+        return this.put('/usuario', dados);
     }
 
     estaAutenticado() {
