@@ -28,6 +28,10 @@ export default function UploadImagem({
         }
 
         const arquivo = referenciaInput?.current?.files[0];
+            obterUrlDaImagemEAtualizarEstado(arquivo);
+    }
+
+    const obterUrlDaImagemEAtualizarEstado = (arquivo) => {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(arquivo);
         fileReader.onloadend = () => {
@@ -38,8 +42,21 @@ export default function UploadImagem({
         }
     }
 
+    const aoSoltarImagem = (e) => {
+        e.preventDefault();
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            const arquivo = e.dataTransfer.files[0];
+            obterUrlDaImagemEAtualizarEstado(arquivo);
+
+        }
+    }
+
     return(
-        <div className={`uploadImagemContainer ${className}`} onClick={abrirSeletorArquivos}>
+        <div className={`uploadImagemContainer ${className}`} 
+            onClick={abrirSeletorArquivos}
+            onDragOver={e => e.preventDefault()}
+            onDrop={aoSoltarImagem}
+        >
             {imagemPreview && (
                 <div className="imagemPreviewContainer">
                     <img 
