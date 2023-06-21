@@ -11,6 +11,11 @@
                 height: 80px;
                 width: 80px;
                 margin-right: 24px;
+
+                border: solid 3px transparent;
+                background-image: linear-gradient(to bottom,white, white), radial-gradient(circle at top center, $corPrimaria, $corPrimaria3);
+                background-origin: border-box;
+                background-clip: padding-box, border-box;
             }
 
             .informacoesPerfil {
