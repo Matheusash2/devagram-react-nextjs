@@ -1,4 +1,4 @@
-import { LoadingHelper } from "@/helpers/loadingHelper";
+import { LoadingHelper } from "../helpers/loadingHelper";
 import axios from "axios";
 
 export default class DevagramApiService {
