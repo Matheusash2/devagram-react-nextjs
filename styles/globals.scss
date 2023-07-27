@@ -1,4 +1,5 @@
 @import 'variaveis.scss';
+@import 'bootstrap/scss/bootstrap.scss';
 
 * {
   font-family: $fontRegular;
@@ -124,3 +125,4 @@ body {
 @import '../pages/perfil/perfil.scss';
 @import '../pages/publicacao/publicacao.scss';
 @import '../componentes/loading/loading.scss';
+@import '../componentes/modalPostagem/modal.scss'

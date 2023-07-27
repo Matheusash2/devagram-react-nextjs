@@ -59,8 +59,7 @@ export default function Login({aposAutenticacao}) {
                     layout="fill"
                     className="logo"
                 />
-            </div>
-
+            </div> 
             <div className="conteudoPaginaPublica">
                 <form onSubmit={aoSubmeter}>
                     <InputPublico

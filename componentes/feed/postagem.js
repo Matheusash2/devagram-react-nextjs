@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../avatar";
 import Image from "next/legacy/image";
-import FazerComentario from "./fazerComentario";
+import FazerComentario from "./FazerComentario";
 import FeedService from "../../services/FeedService";
 
 import imagemCurtir from "../../public/imagens/curtir.svg";
@@ -20,7 +20,7 @@ export default function Postagem({
     descricao,
     comentarios,
     usuarioLogado,
-    curtidas
+    curtidas,
 }) {
     const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
     const [comentariosPostagem, setComentariosPostagem] = useState(comentarios);
@@ -56,7 +56,7 @@ export default function Postagem({
             await feedService.adicionarComentario(id, comentario);
             setDeveExibirSecaoParaComentar(false);
             setComentariosPostagem([
-                ...comentariosPostagem, 
+                ...comentariosPostagem,
                 {
                     nome: usuarioLogado.nome,
                     mensagem: comentario
@@ -81,7 +81,7 @@ export default function Postagem({
                 );
             } else {
                 // Adiciona usuario logado
-                setCurtidasPostagem ([
+                setCurtidasPostagem([
                     ...curtidasPostagem,
                     usuarioLogado.id
                 ]);
@@ -90,11 +90,11 @@ export default function Postagem({
             alert(`Erro ao alterar curtida! ` + (e?.response?.data?.erro || ''));
         }
     }
-    
+
     const obterImagemCurtida = () => {
         return usuarioLogadoCurtiuPostagem()
-        ? imagemCurtido
-        : imagemCurtir;
+            ? imagemCurtido
+            : imagemCurtir;
     }
 
     return (
@@ -105,11 +105,9 @@ export default function Postagem({
                     <strong>{usuario.nome}</strong>
                 </section>
             </Link>
-
             <div className="fotoDaPostagem">
-                <img src={fotoDoPost} alt="Foto da postagem"/>
+                <img src={fotoDoPost} alt="Foto da postagem" />
             </div>
-
             <div className="rodapeDaPostagem">
                 <div className="acoesDaPostagem">
                     <Image
@@ -117,28 +115,25 @@ export default function Postagem({
                         alt='icone curtir'
                         width={20}
                         height={20}
-                        onClick={alterarCurtida} 
+                        onClick={alterarCurtida}
                     />
-
                     <Image
                         src={obterImagemComentario()}
                         alt='icone comentar'
                         width={20}
                         height={20}
-                        onClick={() => setDeveExibirSecaoParaComentar(!deveExibirSecaoParaComentar)} 
+                        onClick={() => setDeveExibirSecaoParaComentar(!deveExibirSecaoParaComentar)}
                     />
-
                     <span className="quantidadeCurtidas">
                         Curtido por <strong>{curtidasPostagem.length} pessoas</strong>
-                    </span>                  
+                    </span>
                 </div>
-
-                <div className="discricaoDaPostagem">
+                <div className="descricaoDaPostagem">
                     <strong className="nomeUsuario">{usuario.nome}</strong>
                     <p className="descricao">
                         {obterDescricao()}
                         {descricaoMaiorQueLimite() && (
-                            <span 
+                            <span
                                 onClick={exibirDescricaoCompleta}
                                 className="exibirDescricaoCompleta">
                                 mais
@@ -146,9 +141,8 @@ export default function Postagem({
                         )}
                     </p>
                 </div>
-                
                 <div className="comentariosDaPublicacao">
-                    {comentariosPostagem.map((comentario, i)=> (
+                    {comentariosPostagem.map((comentario, i) => (
                         <div className="comentario" key={i}>
                             <strong className="nomeUsuario">{comentario.nome}</strong>
                             <p className="descricao">{comentario.mensagem}</p>
@@ -156,11 +150,9 @@ export default function Postagem({
                     ))}
                 </div>
             </div>
-
-            {deveExibirSecaoParaComentar && 
+            {deveExibirSecaoParaComentar &&
                 <FazerComentario comentar={comentar} usuarioLogado={usuarioLogado} />
             }
-
         </div>
     )
 }

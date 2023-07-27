@@ -4,6 +4,7 @@ import CabecalhoPerfil from "@/componentes/cabecalhoPerfil";
 import Feed from "../../componentes/feed";
 import comAutorizacao from "../../hoc/comAutorizacao";
 import UsuarioService from "../../services/UsuarioService";
+import ModalPostagem from "@/componentes/modalPostagem";
 
 const usuarioService = new UsuarioService();
 
@@ -13,11 +14,7 @@ function Perfil({ usuarioLogado }) {
 
     const obterPerfil = async (idUsuario) => {
         try {
-            const { data } = await usuarioService.obterPerfil(
-                estaNoPerfilPessoal()
-                    ? usuarioLogado.id
-                    : idUsuario
-            );
+            const { data } = await usuarioService.obterPerfil(idUsuario);
             return data;
         } catch (error) {
             alert(`Erro ao obter perfil do usuario!`);
@@ -33,7 +30,11 @@ function Perfil({ usuarioLogado }) {
             if (!router.query.id) {
                 return;
             }
-            const dadosPerfil = await obterPerfil(router.query.id);
+            const perfilId = estaNoPerfilPessoal()
+                ? usuarioLogado.id
+                : router.query.id;
+
+            const dadosPerfil = await obterPerfil(perfilId);
             setUsuario(dadosPerfil);
         };
 
