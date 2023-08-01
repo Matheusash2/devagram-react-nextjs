@@ -10,7 +10,28 @@ const usuarioService = new UsuarioService();
 
 function Perfil({ usuarioLogado }) {
     const [usuario, setUsuario] = useState({});
+    const [abrirModal, setAbrirModal] = useState(false);
+    const [postagensPerfil, setPostagensPerfil] = useState([]);
+    const [postagemAtualIndex, setPostagemAtualIndex] = useState(0);
+    const [chaveModalPostagem, setChaveModalPostagem] = useState(0);
     const router = useRouter();
+
+    const abrirModalPostagem = (postagensPerfil, postagemSelecionada) => {
+        setPostagensPerfil(postagensPerfil);
+        setAbrirModal(true);
+        const indicePostagemSelecionada = postagensPerfil.findIndex(
+            (postagem) => postagem.id === postagemSelecionada.id
+        );
+        setPostagemAtualIndex(indicePostagemSelecionada);
+    };
+
+    const fecharModalPostagem = () => {
+        setAbrirModal(false);
+    };
+
+    useEffect(() => {
+        setChaveModalPostagem((prevChave) => prevChave + 1);
+    }, [postagemAtualIndex]);
 
     const obterPerfil = async (idUsuario) => {
         try {
@@ -19,7 +40,7 @@ function Perfil({ usuarioLogado }) {
         } catch (error) {
             alert(`Erro ao obter perfil do usuario!`);
         }
-    }
+    };
 
     const estaNoPerfilPessoal = () => {
         return router.query.id === 'eu' || router.query.id === usuarioLogado?.id;
@@ -51,7 +72,19 @@ function Perfil({ usuarioLogado }) {
             <Feed
                 usuarioLogado={usuarioLogado}
                 usuarioPerfil={usuario}
+                abrirModalPostagem={abrirModalPostagem}
             />
+            {abrirModal && postagensPerfil.length > 0 && (
+                <ModalPostagem
+                    key={chaveModalPostagem}
+                    fecharModalPostagem={fecharModalPostagem}
+                    postagemAtualIndex={postagemAtualIndex}
+                    setPostagemAtualIndex={setPostagemAtualIndex}
+                    postagensPerfil={postagensPerfil}
+                    usuarioLogado={usuarioLogado}
+                    usuarioPerfil={usuario}
+                />
+            )}
         </div>
     );
 }

@@ -4,13 +4,14 @@ import Postagem from "./Postagem";
 
 const feedService = new FeedService();
 
-export default function Feed({ usuarioLogado, usuarioPerfil }) {
+export default function Feed({ usuarioLogado, usuarioPerfil, abrirModalPostagem }) {
     const [listaDePostagens, setListaDePostagens] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             setListaDePostagens([]);
             const { data } = await feedService.carregarPostagens(usuarioPerfil?._id);
+            setListaDePostagens(data);
 
             const postagensFormatadas = data.map((postagem) => ({
                 id: postagem._id,
@@ -41,13 +42,15 @@ export default function Feed({ usuarioLogado, usuarioPerfil }) {
     return (
         <div className="feedContainer largura30pctDesktop">
             {listaDePostagens.map(dadosPostagem => (
-                <Postagem
-                    key={dadosPostagem.id}
-                    {...dadosPostagem}
-                    usuarioLogado={usuarioLogado}
-                />
-            ))
-            }
+                <div key={dadosPostagem.id}
+                    onDoubleClick={() => abrirModalPostagem && abrirModalPostagem(listaDePostagens, dadosPostagem)}>
+                    <Postagem
+                        key={dadosPostagem.id}
+                        {...dadosPostagem}
+                        usuarioLogado={usuarioLogado}
+                    />
+                </div>
+            ))}
         </div>
-    )
+    );
 }

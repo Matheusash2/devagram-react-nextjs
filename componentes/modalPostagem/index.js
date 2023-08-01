@@ -1,74 +1,90 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import Postagem from "../feed/Postagem";
 import Image from "next/image";
-import FeedService from "@/services/FeedService";
 
 import setaDireita from "../../public/imagens/setaDireitaPostagem.svg";
 import setaEsquerda from "../../public/imagens/setaEsquerdaPostagem.svg";
 import fecharModal from "../../public/imagens/fecharPostagem.svg";
 
-const feedService = new FeedService();
-
 export default function ModalPostagem({
+    fecharModalPostagem,
+    usuarioLogado,
+    usuarioPerfil,
+    postagensPerfil,
+    postagemAtualIndex,
+    setPostagemAtualIndex,
 }) {
-    const [postagemAtual, setPostagemAtual] = useState([]);
-    const [abrirModalPostagem, setAbrirModalPostagem] = useState(false);
-    const [indicePostagemSelecionada, setIndicePostagemSelecionada] = useState([]);
+    const [postagemAtual, setPostagemAtual] = useState(null);
+
+    const PrimeiraPostagem = postagemAtualIndex === 0;
+    const UltimaPostagem = postagemAtualIndex === postagensPerfil.length - 1;
 
     useEffect(() => {
-        if (postagensPerfil && indicePostagemSelecionada !== null) {
-            setPostagemAtual(postagensPerfil[indicePostagemSelecionada]);
+        if (postagemAtualIndex !== null && postagensPerfil.length > 0) {
+            const postagemAtual = postagensPerfil[postagemAtualIndex];
+            setPostagemAtual(postagemAtual);
+            console.log("Dados da postagem atual:", postagemAtual);
         }
-    }, [postagensPerfil, indicePostagemSelecionada]);
+    }, [postagemAtualIndex, postagensPerfil]);
 
     const proximaPostagem = () => {
-        if (indicePostagemSelecionada !== null && indicePostagemSelecionada !== postagensPerfil.length - 1) {
-            setIndicePostagemSelecionada((prevIndice) => prevIndice + 1);
+        if (postagemAtualIndex !== null && postagemAtualIndex !== postagensPerfil.length - 1) {
+            setPostagemAtualIndex((prevIndice) => prevIndice + 1);
         }
     };
 
     const anteriorPostagem = () => {
-        if (indicePostagemSelecionada !== null && indicePostagemSelecionada !== 0) {
-            setIndicePostagemSelecionada((prevIndice) => prevIndice - 1);
+        if (postagemAtualIndex !== null && postagemAtualIndex !== 0) {
+            setPostagemAtualIndex((prevIndice) => prevIndice - 1);
         }
     };
 
     return (
-        <Modal show={abrirModalPostagem} onHide={() => setAbrirModalPostagem(false)} className="containerModal">
+        <Modal
+            key={postagemAtual?.id}
+            show={!!postagensPerfil.length}
+            onHide={fecharModalPostagem}
+            className="containerModal"
+        >
             <Modal.Header className="headerModal">
                 <Modal.Title className="tituloModal"><strong>Postagem</strong></Modal.Title>
                 <div className="btnFecharModal">
                     <Image
                         src={fecharModal}
                         alt="Fechar"
-                        onClick={() => setAbrirModalPostagem(false)}
+                        onClick={fecharModalPostagem}
                     />
                 </div>
             </Modal.Header>
             <Modal.Body className="bodyModal">
-                {postagensPerfil && postagemAtual && (
+                {postagemAtual && (
                     <div className="postagemModal">
                         <Postagem
-                            id={Postagem.id}
-                            usuario={Postagem.usuario}
-                            fotoDoPost={Postagem.fotoDoPost}
-                            descricao={Postagem.descricao}
-                            comentarios={Postagem.comentarios}
-                            curtidas={Postagem.curtidas}
+                            id={postagemAtual.id}
+                            usuario={postagemAtual.usuario}
+                            fotoDoPost={postagemAtual.fotoDoPost}
+                            descricao={postagemAtual.descricao}
+                            comentarios={postagemAtual.comentarios}
+                            curtidas={postagemAtual.curtidas}
                             usuarioLogado={usuarioLogado}
+                            usuarioPerfil={usuarioPerfil}
                         />
                         <div className="navegacaoModal">
-                            <Image
-                                src={setaEsquerda}
-                                alt="Anterior"
-                                onClick={anteriorPostagem}
-                            />
-                            <Image
-                                src={setaDireita}
-                                alt="Próxima"
-                                onClick={proximaPostagem}
-                            />
+                            <div className={`setaEsquerda ${PrimeiraPostagem ? 'disabled' : ''}`}>
+                                <Image
+                                    src={setaEsquerda}
+                                    alt="Anterior"
+                                    onClick={anteriorPostagem}
+                                />
+                            </div>
+                            <div className={`setaDireita ${UltimaPostagem ? 'disabled' : ''}`}>
+                                <Image
+                                    src={setaDireita}
+                                    alt="Próxima"
+                                    onClick={proximaPostagem}
+                                />
+                            </div>
                         </div>
                     </div>
                 )}
