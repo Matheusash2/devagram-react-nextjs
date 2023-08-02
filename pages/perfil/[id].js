@@ -14,12 +14,21 @@ function Perfil({ usuarioLogado }) {
     const [postagensPerfil, setPostagensPerfil] = useState([]);
     const [postagemAtualIndex, setPostagemAtualIndex] = useState(0);
     const [chaveModalPostagem, setChaveModalPostagem] = useState(0);
+    const [recarregarFeed, setRecarregarFeed] = useState(false);
     const router = useRouter();
 
-    const abrirModalPostagem = (postagensPerfil, postagemSelecionada) => {
-        setPostagensPerfil(postagensPerfil);
+    const aoAtualizarFeed = () => {
+        setRecarregarFeed(true);
+    }
+
+    const atualizarModalPostagens = (postagens) => {
+        setPostagensPerfil(postagens);
+    }
+    
+    const abrirModalPostagem = (postagens, postagemSelecionada) => {
+        setPostagensPerfil(postagens);
         setAbrirModal(true);
-        const indicePostagemSelecionada = postagensPerfil.findIndex(
+        const indicePostagemSelecionada = postagens.findIndex(
             (postagem) => postagem.id === postagemSelecionada.id
         );
         setPostagemAtualIndex(indicePostagemSelecionada);
@@ -73,6 +82,9 @@ function Perfil({ usuarioLogado }) {
                 usuarioLogado={usuarioLogado}
                 usuarioPerfil={usuario}
                 abrirModalPostagem={abrirModalPostagem}
+                recarregarFeed={recarregarFeed}
+                setRecarregarFeed={setRecarregarFeed}
+                atualizarModalPostagens={atualizarModalPostagens}
             />
             {abrirModal && postagensPerfil.length > 0 && (
                 <ModalPostagem
@@ -83,6 +95,7 @@ function Perfil({ usuarioLogado }) {
                     postagensPerfil={postagensPerfil}
                     usuarioLogado={usuarioLogado}
                     usuarioPerfil={usuario}
+                    aoAtualizarFeed={aoAtualizarFeed}
                 />
             )}
         </div>

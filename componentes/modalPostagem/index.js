@@ -14,6 +14,7 @@ export default function ModalPostagem({
     postagensPerfil,
     postagemAtualIndex,
     setPostagemAtualIndex,
+    aoAtualizarFeed
 }) {
     const [postagemAtual, setPostagemAtual] = useState(null);
 
@@ -69,6 +70,7 @@ export default function ModalPostagem({
                             curtidas={postagemAtual.curtidas}
                             usuarioLogado={usuarioLogado}
                             usuarioPerfil={usuarioPerfil}
+                            aoAtualizarFeed={aoAtualizarFeed}
                         />
                         <div className="navegacaoModal">
                             <div className={`setaEsquerda ${PrimeiraPostagem ? 'disabled' : ''}`}>

@@ -21,6 +21,7 @@ export default function Postagem({
     comentarios,
     usuarioLogado,
     curtidas,
+    aoAtualizarFeed
 }) {
     const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
     const [comentariosPostagem, setComentariosPostagem] = useState(comentarios);
@@ -62,6 +63,9 @@ export default function Postagem({
                     mensagem: comentario
                 }
             ]);
+            if (aoAtualizarFeed) {
+                aoAtualizarFeed();
+            }
         } catch (e) {
             alert(`Erro ao fazer comentario! ` + (e?.response?.data?.erro || ''));
         }
@@ -85,6 +89,9 @@ export default function Postagem({
                     ...curtidasPostagem,
                     usuarioLogado.id
                 ]);
+            }
+            if (aoAtualizarFeed) {
+                aoAtualizarFeed();
             }
         } catch (e) {
             alert(`Erro ao alterar curtida! ` + (e?.response?.data?.erro || ''));
