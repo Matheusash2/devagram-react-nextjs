@@ -76,7 +76,7 @@ export default function Feed({ usuarioLogado, usuarioPerfil, abrirModalPostagem,
         <div className="feedContainer largura30pctDesktop">
             {listaDePostagens.map(dadosPostagem => (
                 <div key={dadosPostagem.id}
-                    onDoubleClick={() => abrirModalPostagem && abrirModalPostagem(listaDePostagens, dadosPostagem)}>
+                    onClick={(event) => abrirModalPostagem && abrirModalPostagem(listaDePostagens, dadosPostagem, event)}> 
                     <Postagem
                         key={dadosPostagem.id}
                         {...dadosPostagem}

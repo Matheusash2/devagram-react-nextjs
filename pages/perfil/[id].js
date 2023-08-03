@@ -24,14 +24,17 @@ function Perfil({ usuarioLogado }) {
     const atualizarModalPostagens = (postagens) => {
         setPostagensPerfil(postagens);
     }
-    
-    const abrirModalPostagem = (postagens, postagemSelecionada) => {
-        setPostagensPerfil(postagens);
-        setAbrirModal(true);
-        const indicePostagemSelecionada = postagens.findIndex(
-            (postagem) => postagem.id === postagemSelecionada.id
-        );
-        setPostagemAtualIndex(indicePostagemSelecionada);
+
+    const abrirModalPostagem = (postagens, postagemSelecionada, event) => {
+        const imagemPostagemClicked = event.target.closest('.fotoDaPostagem');
+        if (imagemPostagemClicked) {
+            setPostagensPerfil(postagens);
+            setAbrirModal(true);
+            const indicePostagemSelecionada = postagens.findIndex(
+                (postagem) => postagem.id === postagemSelecionada.id
+            );
+            setPostagemAtualIndex(indicePostagemSelecionada);
+        }
     };
 
     const fecharModalPostagem = () => {

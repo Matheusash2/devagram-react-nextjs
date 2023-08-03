@@ -1,5 +1,6 @@
 @mixin setas {
     img {
+        cursor: pointer;
         width: 20px;
         height: 20px;
         opacity: 0.5;
@@ -179,7 +180,6 @@
                 justify-content: space-between;
 
                 img {
-                    cursor: pointer;
                     width: 30px;
                     height: 30px;
                 }
@@ -251,13 +251,15 @@
                     }
 
                     .setaDireita {
+                        position: absolute;
+                        right: 0;
+                        padding-right: 16px;
                         
                         @include setas();
                         
                         &.disabled {
                             display: none;
                         }
-
                     }
                 }
             }

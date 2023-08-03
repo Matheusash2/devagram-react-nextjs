@@ -21,7 +21,7 @@ export default function Postagem({
     comentarios,
     usuarioLogado,
     curtidas,
-    aoAtualizarFeed
+    aoAtualizarFeed,
 }) {
     const [curtidasPostagem, setCurtidasPostagem] = useState(curtidas);
     const [comentariosPostagem, setComentariosPostagem] = useState(comentarios);
@@ -113,7 +113,8 @@ export default function Postagem({
                 </section>
             </Link>
             <div className="fotoDaPostagem">
-                <img src={fotoDoPost} alt="Foto da postagem" />
+                <img src={fotoDoPost}
+                    alt="Foto da postagem" />
             </div>
             <div className="rodapeDaPostagem">
                 <div className="acoesDaPostagem">
