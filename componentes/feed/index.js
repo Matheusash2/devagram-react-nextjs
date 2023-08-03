@@ -61,10 +61,14 @@ export default function Feed({ usuarioLogado, usuarioPerfil, abrirModalPostagem,
             }));
 
             setListaDePostagens(postagensFormatadas);
-            setRecarregarFeed(false);
-            atualizarModalPostagens(postagensFormatadas);
+            setRecarregarFeed = () => {
+                false;
+            };
+            atualizarModalPostagens = () => {
+                postagensFormatadas;
+            };
         };
-
+        
         fetchData();
     }, [usuarioLogado, usuarioPerfil, recarregarFeed]);
 
