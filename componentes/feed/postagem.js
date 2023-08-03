@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../avatar";
 import Image from "next/legacy/image";
-import FazerComentario from "./FazerComentario";
+import FazerComentario from "./fazerComentario";
 import FeedService from "../../services/FeedService";
 
 import imagemCurtir from "../../public/imagens/curtir.svg";

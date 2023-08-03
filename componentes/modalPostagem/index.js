@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import Postagem from "../feed/Postagem";
+import Postagem from "../feed/postagem";
 import Image from "next/image";
 
 import setaDireita from "../../public/imagens/setaDireitaPostagem.svg";
