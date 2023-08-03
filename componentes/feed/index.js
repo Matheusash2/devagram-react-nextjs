@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import FeedService from "../../services/FeedService";
-import Postagem from "./postagem";
+import Postagem from "./Postagem";
 
 const feedService = new FeedService();
 
